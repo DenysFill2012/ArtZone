@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Чат повідомлень</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f1f1f1;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    header {
+      background: #4CAF50;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 24px;
+    }
+
+    #chat-box {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      background: #ffffff;
+    }
+
+    .message {
+      background: #e0ffe0;
+      margin: 10px 0;
+      padding: 10px 15px;
+      border-radius: 8px;
+      max-width: 70%;
+    }
+
+    #input-area {
+      display: flex;
+      padding: 10px;
+      background: #ddd;
+    }
+
+    #input-area input {
+      flex: 1;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #aaa;
+    }
+
+    #input-area button {
+      padding: 10px 20px;
+      margin-left: 10px;
+      font-size: 16px;
+      border: none;
+      background: #4CAF50;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    #input-area button:hover {
+      background: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <header>Чат повідомлень</header>
+
+  <div id="chat-box"></div>
+
+  <div id="input-area">
+    <input type="text" id="message-input" placeholder="Напиши повідомлення..." />
+    <button onclick="sendMessage()">Надіслати</button>
+  </div>
+
+  <script>
+    function sendMessage() {
+      const input = document.getElementById("message-input");
+      const message = input.value.trim();
+
+      if (message !== "") {
+        const chatBox = document.getElementById("chat-box");
+        const messageDiv = document.createElement("div");
+        messageDiv.className = "message";
+        messageDiv.textContent = message;
+        chatBox.appendChild(messageDiv);
+        input.value = "";
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }
+    }
+
+    // Надсилання по Enter
+    document.getElementById("message-input").addEventListener("keydown", function (e) {
+      if (e.key === "Enter") sendMessage();
+    });
+  </script>
+</body>
+</html>

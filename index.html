@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ArtZone — Головна</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #f9f7f7, #c9e4de);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 48px;
+      color: #222;
+      margin-bottom: 20px;
+      animation: fadeIn 1s ease-out;
+    }
+
+    p {
+      font-size: 18px;
+      color: #555;
+      margin-bottom: 40px;
+      animation: fadeIn 1.5s ease-out;
+    }
+
+    .btn-container {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      animation: fadeIn 2s ease-out;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 15px 35px;
+      font-size: 20px;
+      background: #ff7f50;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: 0.3s;
+      box-shadow: 0 8px 20px rgba(255, 127, 80, 0.4);
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: #ff6333;
+      transform: scale(1.05);
+      box-shadow: 0 10px 25px rgba(255, 99, 51, 0.6);
+    }
+
+    .chat-box {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      max-width: 400px;
+      height: 400px;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .messages {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+
+    .message {
+      background: #f0f0f0;
+      padding: 10px 15px;
+      margin-bottom: 10px;
+      border-radius: 10px;
+    }
+
+    .input-container {
+      display: flex;
+      padding: 10px;
+      gap: 10px;
+      background: #fafafa;
+    }
+
+    .input-container input {
+      flex: 1;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .input-container button {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .input-container button:hover {
+      background: #3e8e41;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <h1>Ласкаво просимо до <span style="color:#4CAF50">ArtZone</span>!</h1>
+  <p>Тут ви можете замовити унікальний арт або поспілкуватися 💬</p>
+
+  <div class="btn-container">
+    <a href="gallery.html" class="btn">Наші арти</a>
+    <a href="https://t.me/TheArtCaptain_bot" class="btn" target="_blank">Чат з нами</a>
+    <button class="btn" onclick="toggleChat()">Відгуки/Пропозиції</button>
+  </div>
+
+  <div class="chat-box" id="chatBox">
+    <div class="messages" id="messages">
+      <div class="message">👋 Ласкаво просимо! Напишіть свій відгук/пропозицію нижче.</div>
+    </div>
+    <div class="input-container">
+      <input type="text" id="inputMessage" placeholder="Ваш відгук..." />
+      <button onclick="sendMessage()">Надіслати</button>
+    </div>
+  </div>
+
+  <script>
+    function toggleChat() {
+      const chatBox = document.getElementById('chatBox');
+      chatBox.style.display = chatBox.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    async function sendMessage() {
+      const input = document.getElementById('inputMessage');
+      const msg = input.value.trim();
+      if (msg === '') return;
+
+      const messageContainer = document.createElement('div');
+      messageContainer.className = 'message';
+      messageContainer.textContent = msg;
+
+      document.getElementById('messages').appendChild(messageContainer);
+      input.value = '';
+
+      // Прокрутка вниз
+      const messagesBox = document.getElementById('messages');
+      messagesBox.scrollTop = messagesBox.scrollHeight;
+
+      // Надсилання відгуку в Discord
+      const webhookURL = 'https://discord.com/api/webhooks/1367750475692118076/3hkMeASjaIX7D1G5Wk1YLsALXtj65y6WPNbqtio_2QcaZH2zay97kH8CbgAkEepZAgv4'; // замініть на ваш вебхук URL
+      const payload = {
+        content: msg, // Відгук
+      };
+
+      try {
+        const response = await fetch(webhookURL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) {
+          console.error('Помилка при відправці повідомлення в Discord');
+        }
+      } catch (error) {
+        console.error('Помилка при відправці повідомлення:', error);
+      }
+    }
+  </script>
+</body>
+</html>

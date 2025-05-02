@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Замовлення Артів</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h1>Замовлення Артів</h1>
+    <p>Створи унікальний арт для себе або своїх близьких!</p>
+  </header>
+
+  <section class="form-container">
+    <h2>Заповни форму для замовлення:</h2>
+    <form id="order-form">
+      <label for="name">Ваше ім'я:</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="email">Електронна пошта:</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="art-type">Тип артів:</label>
+      <select id="art-type" name="art-type" required>
+        <option value="портрет">Портрет</option>
+        <option value="пейзаж">Пейзаж</option>
+        <option value="карикатура">Карикатура</option>
+      </select>
+
+      <label for="details">Деталі:</label>
+      <textarea id="details" name="details" rows="4" placeholder="Опишіть, що ви хочете побачити в арті..." required></textarea>
+
+      <button type="submit">Замовити арт</button>
+    </form>
+    <p id="response-message"></p>
+  </section>
+
+  <footer>
+    <p>© 2025 Замовлення Артів. Всі права захищені.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
