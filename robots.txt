@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /private/
+Allow: /public/
+
+Sitemap: https://denysfill2012.github.io/ArtZone/sitemap.xml
